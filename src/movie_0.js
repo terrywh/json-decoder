@@ -35,7 +35,7 @@ function parse_item($, el) {
 	let score = parseInt($(el).find("td").eq(2).find("span").text()),
 		title = $(el).find(".subject_link").text().trim(),
 		link  = "http://btbtt.co/" + $(el).find(".subject_link").attr("href");
-	if(score < 5) {
+	if(score < 7) {
 		return null;
 	}
 	let types = [];
