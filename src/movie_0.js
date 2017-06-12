@@ -35,12 +35,12 @@ function parse_item($, el) {
 	let score = parseInt($(el).find("td").eq(2).find("span").text()),
 		title = $(el).find(".subject_link").text().trim(),
 		link  = "http://btbtt.co/" + $(el).find(".subject_link").attr("href");
-	if(score < 10) {
+	if(score < 5) {
 		return null;
 	}
 	let types = [];
 	$(el).find(".subject_type").each(function(index, el) {
 		types.push($(el).text());
 	});
-	return {"title":title, "types": types, "score": score, "link": link};
+	return {"title":title, "types": types, "link": link};
 }
