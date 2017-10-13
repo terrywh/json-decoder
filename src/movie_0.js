@@ -2,7 +2,7 @@
 
 const cheerio = require("cheerio"),
 	kURLS = [
-	"http://www.btbtt.co/forum-index-fid-951.htm",
+//	"http://www.btbtt.co/forum-index-fid-951.htm",
 	"http://www.btbtt.co/forum-index-fid-951-page-2.htm",
 	"http://www.btbtt.co/forum-index-fid-951-page-3.htm",
 	"http://www.btbtt.co/forum-index-fid-951-page-4.htm",
@@ -24,7 +24,8 @@ exports.parse = function*(html) {
 	const $ = cheerio.load(html);
 	for(let el of $("#threadlist > table > tbody > tr").toArray()) {
 		// 仅采集正常的帖子（抛弃置顶帖子）
-		if(!$(el).find("td").eq(0).find(".icon").hasClass("icon-post-blue")) {
+		let $icon = $(el).find("td").eq(0).find(".icon");
+		if(!$icon.hasClass("icon-post-blue") && !$icon.hasClass("icon-post-grey")) {
 			continue;
 		}
 		yield parse_item($, el);
@@ -35,7 +36,7 @@ function parse_item($, el) {
 	let score = parseInt($(el).find("td").eq(2).find("span").text()),
 		title = $(el).find(".subject_link").text().trim(),
 		link  = "http://btbtt.co/" + $(el).find(".subject_link").attr("href");
-	if(score < 7) {
+	if(score < 10) {
 		return null;
 	}
 	let types = [];
